@@ -26,7 +26,7 @@ Any deviations from the original formulation (e.g. inclusion of a forget gate)
 are documented in the code and math notes.
 
 ## Project structure
-.
+```.
 ├── src/
 │   ├── lstm_cell.py
 │   ├── train.py      # training logic only
@@ -35,6 +35,7 @@ are documented in the code and math notes.
 ├── docs/
 │   └── math.md
 └── README.md
+```
 
 ## Usage
 Install dependencies:
@@ -44,14 +45,17 @@ pip install torch
 
 ## Run training
 Use the entry point:
+```bash
 python src/main.py
+```
 
 This will:
-- Load/generate data (from data.py)
-- Initialize the LSTM model (lstm_cell.py)
-- Run the training loop (train.py)
+- Load/generate data (from `data.py`)
+- Initialize the LSTM model (`lstm_cell.py`)
+- Run the training loop (`train.py`)
 
 ## Documentation
 The full mathematical formulation of the forward pass and the mapping
 from equations to code variables is provided in:
-docs/math.md
+
+`docs/math.md`
