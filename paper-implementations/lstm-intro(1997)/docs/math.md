@@ -8,10 +8,10 @@ Hochreiter & Schmidhuber (1997) paper, with PyTorch tensor variable mapping.
 
 ## Notation
 
-- $x_t$ : input at time step t  
-- $h_t$ : hidden state at time step t  
-- $c_t$ : cell state at time step t  
-- $W_*, U_*, b_*$ : learnable weights and biases for each gate  
+- $x_t$ : input at time step $t$  
+- $h_t$ : hidden state at time step $t$ 
+- $c_t$ : cell state at time step $t$  
+- $W_\*, U_\*, b_\*$ : learnable weights and biases for each gate  
 - $\sigma$ : sigmoid activation function  
 - $\tanh$ : hyperbolic tangent activation
 
@@ -64,10 +64,10 @@ $$h_t = o_t \odot \tanh(c_t)$$
 
 ## Sequence Unrolling
 
-For a sequence of length T:
+For a sequence of length $T$:
 
 1. Initialize `h[-1]` and `c[-1]` (typically zeros)  
-2. For t = 0 to T-1:  
+2. For $t = 0$ to $T-1$:  
    - Compute `i, o, g`  
    - Update cell state `c`  
    - Compute hidden state `h`  
