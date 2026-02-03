@@ -77,7 +77,6 @@ In this implementation, the derivative of the cell state $c_t$ with respect to t
 $$\frac{\partial c_t}{\partial c_{t-1}} = \frac{\partial}{\partial c_{t-1}} [i_t \odot \tilde{c}_t + c_{t-1}] = 1$$
 
 Because this derivative is **1**, the gradient can flow through hundreds of time steps without shrinking to zero, rather constant at 1.
-
 $$
 \frac{\partial c_k}{\partial c_t}
 =
