@@ -74,11 +74,11 @@ $$\frac{\partial h_k}{\partial h_t} \propto (W_{hh})^{k-t}$$
 ### The LSTM Solution
 In this implementation, the derivative of the cell state $c_t$ with respect to the previous state $c_{t-1}$ is:
 
-$$\frac{\partial c_t}{\partial c_{t-1}} = \frac{\partial}{\partial c_{t-1}} [i_t \odot \tilde{c}_t + c_{t-1}] \approx 1$$
+$$\frac{\partial c_t}{\partial c_{t-1}} = \frac{\partial}{\partial c_{t-1}} [i_t \odot \tilde{c}_t + c_{t-1}] = 1$$
 
-Because this derivative is **approximately 1**, the gradient can flow through hundreds of time steps without shrinking to zero.
+Because this derivative is **1**, the gradient can flow through hundreds of time steps without shrinking to zero, rather constant at 1.
 
-#### $$\frac{\partial c_k}{\partial c_t}=\prod_{j=t+1}^k\frac{\partial c_j}{\partial c_{j-1}}\approx\prod_{j=t+1}^k 1\approx 1$$
+## $$\frac{\partial c_k}{\partial c_t}=\prod_{j=t+1}^k\frac{\partial c_j}{\partial c_{j-1}}=\prod_{j=t+1}^k 1= 1$$
 
 This "Identity Mapping" is mathematically similar to the Skip Connections later used in ResNets.
 
