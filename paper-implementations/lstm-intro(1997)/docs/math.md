@@ -72,6 +72,7 @@ $$\frac{\partial h_k}{\partial h_t} \propto (W_{hh})^{k-t}$$
 
 ### The LSTM Solution
 In this implementation, the derivative of the cell state $c_t$ with respect to the previous state $c_{t-1}$ is:
+
 $$\frac{\partial c_t}{\partial c_{t-1}} = \frac{\partial}{\partial c_{t-1}} [i_t \odot \tilde{c}_t + c_{t-1}] = 1 + \text{terms related to gates}$$
 
 Because this derivative is **approximately 1**, the gradient can flow through hundreds of time steps without shrinking to zero. This "Identity Mapping" is mathematically similar to the Skip Connections later used in ResNets.
