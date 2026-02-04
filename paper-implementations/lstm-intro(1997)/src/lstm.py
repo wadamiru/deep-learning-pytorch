@@ -10,7 +10,7 @@ class LSTMCell(nn.Module):
     Note: This version does NOT include a forget gate, Implementing the 
     Constant Error Carousel (CEC) as originally proposed.
     """
-    def __init__(self, input_size: int, hidden_size: int):
+    def __init__(self, input_size, hidden_size):
         super().__init__()
         self.input_size = input_size
         self.hidden_size = hidden_size
@@ -81,7 +81,7 @@ class LSTMCell(nn.Module):
 # LSTM Model Implementation #
 #---------------------------#
 class DeepLSTM(nn.Module):
-    def __init__(self, input_size: int, hidden_size: int, output_size: int, num_layers=3):
+    def __init__(self, input_size, hidden_size, num_layers=1):
         super().__init__()
         self.hidden_size = hidden_size
         # No of hidden layers
@@ -96,9 +96,6 @@ class DeepLSTM(nn.Module):
         # Subsequent layers take the hidden_size of previous layers as input
         for _ in range(1, num_layers):
             self.lstm.append(LSTMCell(hidden_size, hidden_size))
-
-        # Fully connected output layer
-        self.fc = nn.Linear(hidden_size, output_size)
 
     def forward(self, x, states=None):
         # x shape: (batch_size, seq_len, input_size)
@@ -144,8 +141,25 @@ class DeepLSTM(nn.Module):
         # final outputs for each time step: (batch_size, T, hidden_size)
         final_outs = torch.cat(seq_outs, dim=1)
 
-        # Compute the logits
-        logits = self.fc(final_outs)
-
         # Return logits and h/c_states stacked into 3D Tensors
-        return logits, (torch.stack(h_states), torch.stack(c_states))
+        return final_outs, (torch.stack(h_states), torch.stack(c_states))
+    
+#-----------------------------#
+# LSTM Wrapper Implementation #
+#-----------------------------#
+class LSTMWrapper(nn.Module):
+    def __init__(self, vocab_size, hidden_size, num_layers):
+        super().__init__()
+        ## Embedding layer
+        self.embed = nn.Embedding(vocab_size, hidden_size)
+        ## LSTM layers
+        self.lstm = DeepLSTM(hidden_size, hidden_size, num_layers)
+        ## Output layer
+        self.fc = nn.Linear(hidden_size, vocab_size)
+
+    def forward(self, x, states=None):
+        x = self.embed(x)
+        out, states = self.lstm(x, states)
+        logits = self.fc(out)
+
+        return logits, states
