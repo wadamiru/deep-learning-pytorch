@@ -1,6 +1,9 @@
 import torch
 import torch.nn as nn
 
+#--------------------------#
+# LSTM Cell Implementation #
+#--------------------------#
 class LSTMCell(nn.Module):
     """
     Implementation of the original LSTM cell from Hochreiter & Schmidhuber (1997).
@@ -24,6 +27,7 @@ class LSTMCell(nn.Module):
 
         self.reset_params()
 
+
     def reset_params(self):
         """
         Initialises parameters to ensure stable gradient flow
@@ -39,6 +43,7 @@ class LSTMCell(nn.Module):
             if 'bias' in name:
                 # Initialises biases to zero to ensure gates start in a 'neutral' state
                 nn.init.constant_(param, 0.0)
+
 
     def forward(self, x, init_states):
         """
@@ -71,7 +76,10 @@ class LSTMCell(nn.Module):
         h_next = o * torch.tanh(c_next)
 
         return h_next, c_next
-    
+
+#---------------------------#
+# LSTM Model Implementation #
+#---------------------------#
 class DeepLSTM(nn.Module):
     def __init__(self, input_size: int, hidden_size: int, output_size: int, num_layers=3):
         super().__init__()
