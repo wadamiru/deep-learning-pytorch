@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from src.lstm_cell import LSTMCell1997 # Assuming this is your class name
+from src.lstm import LSTMCell1997 # Assuming this is your class name
 
 def test_manual_vs_pytorch():
     input_size = 10
