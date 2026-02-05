@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from tqdm import tqdm
 
 def train_model(model, dataloader, epochs=100, lr=0.001):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -11,6 +12,7 @@ def train_model(model, dataloader, epochs=100, lr=0.001):
 
     model.train()
     for epoch in range(epochs):
+        loop = tqdm(dataloader, leave=True)
         total_loss = 0
 
         for x_batch, y_batch in dataloader:
@@ -44,6 +46,10 @@ def train_model(model, dataloader, epochs=100, lr=0.001):
 
             # 7. Add to the total loss
             total_loss += loss.item()
+
+            # update progress bar description
+            loop.set_description(f"Epoch [{epoch+1}/{epochs}]")
+            loop.set_postfix(loss=loss.item())
 
         if (epoch+1) % 20 == 0:
             # !Implement Accuracy

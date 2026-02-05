@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from src.lstm import LSTMCell1997 # Assuming this is your class name
+from src.lstm import LSTMCell # Assuming this is your class name
 
 def test_manual_vs_pytorch():
     input_size = 10
@@ -8,7 +8,7 @@ def test_manual_vs_pytorch():
     batch_size = 1
     
     # 1. Initialize your manual cell
-    manual_cell = LSTMCell1997(input_size, hidden_size)
+    manual_cell = LSTMCell(input_size, hidden_size)
     
     # 2. Initialize PyTorch's official LSTM
     # We use a single layer and a single step

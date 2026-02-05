@@ -8,7 +8,7 @@ Purpose:
     experiments.
 
 Usage:
-    1. Place your raw text file (e.g., full.txt) in the `data/` folder.
+    1. Place your raw text file (full.txt) in the `data/` folder.
     2. Adjust INPUT_PATH if needed.
     3. Run:
         python split_data.py
