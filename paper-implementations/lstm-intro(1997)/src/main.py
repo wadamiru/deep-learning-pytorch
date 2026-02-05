@@ -8,15 +8,15 @@ from train import train_model
 #---------------#
 SEQ_LEN = 50
 HIDDEN_SIZE = 256
-BATCH_SIZE = 64
-NUM_LAYERS = 2
-LR = 0.002
+BATCH_SIZE = 50
+NUM_LAYERS = 3
+LR = 0.01
 EPOCHS = 100
 
 #-----------#
 # LOAD DATA #
 #-----------#
-text = ""
+text = "Hello world this is damiru"
 dataset = CharDataset(text, SEQ_LEN)
 loader = DataLoader(dataset, BATCH_SIZE, shuffle=True, drop_last=True)
 

@@ -6,7 +6,7 @@ def train_model(model, dataloader, epochs=100, lr=0.001):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
-    criterion = nn.MSELoss()
+    criterion = nn.CrossEntropyLoss()
     optimiser = optim.Adam(model.parameters(), lr=lr)
 
     model.train()
@@ -23,6 +23,12 @@ def train_model(model, dataloader, epochs=100, lr=0.001):
             predictions, _ = model(x_batch)
 
             # 3. Calculate Loss
+            ## reshape predictions, and y_batch for CrossEntropyLoss
+            ## predictions: (batch_size, seq_len, vocab_size):- (N, vocab_size)
+            ## y_batch:     (batch_size, seq_len):- (N)
+            predictions = predictions.reshape(-1, predictions.size(-1))
+            y_batch = y_batch.reshape(-1) 
+
             loss = criterion(predictions, y_batch)
 
             # 4. Backward Pass
@@ -39,6 +45,6 @@ def train_model(model, dataloader, epochs=100, lr=0.001):
             # 7. Add to the total loss
             total_loss += loss.item()
 
-        if epoch % 20 == 0:
+        if (epoch+1) % 20 == 0:
             # !Implement Accuracy
-            print(f"Epoch {epoch+1:4d} | Loss {total_loss/len(dataloader)} | Acc --")
+            print(f"Epoch {epoch+1:4d} | Loss {total_loss/len(dataloader):.4f} | Acc --")
