@@ -28,12 +28,18 @@ are documented in the code and math notes.
 ## Project structure
 ```.
 ├── src/
-│   ├── lstm_cell.py
+│   ├── lstm.py
 │   ├── train.py      # training logic only
-│   ├── data.py       # dataset/ toy task
+│   ├── dataset.py       # dataset/ toy task
 │   └── main.py       # entry point
 ├── docs/
 │   └── math.md
+│   └── benchmarks.md
+├── data/
+│   ├── full.txt
+│   ├── train.txt      # training logic only
+│   ├── val.txt       # dataset/ toy task
+│   └── test.txt 
 └── README.md
 ```
 
@@ -50,8 +56,8 @@ python src/main.py
 ```
 
 This will:
-- Load/generate data (from `data.py`)
-- Initialize the LSTM model (`lstm_cell.py`)
+- Prepare data (from `dataset.py`)
+- Initialize the LSTM model (`lstm.py`)
 - Run the training loop (`train.py`)
 
 ## Documentation
