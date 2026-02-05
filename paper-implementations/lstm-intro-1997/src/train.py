@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+
 from tqdm import tqdm
 
 def train_model(model, dataloader, epochs=100, lr=0.001):
@@ -12,7 +13,7 @@ def train_model(model, dataloader, epochs=100, lr=0.001):
 
     model.train()
     for epoch in range(epochs):
-        loop = tqdm(dataloader, leave=True)
+        loop = tqdm(dataloader, leave=True, mininterval=0.1)
         total_loss = 0
 
         for x_batch, y_batch in dataloader:

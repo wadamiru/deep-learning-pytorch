@@ -21,11 +21,12 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 
 train_path = os.path.join(DATA_DIR, "train.txt")
+toy_path = os.path.join(DATA_DIR, "toy.txt")
 
-with open(train_path, "r", encoding="utf-8") as f:
-    train_text = f.read()
-    
-dataset = CharDataset(train_text, SEQ_LEN)
+with open(toy_path, "r", encoding="utf-8") as f:
+    toy_text = f.read()
+
+dataset = CharDataset(toy_text, SEQ_LEN)
 loader = DataLoader(dataset, BATCH_SIZE, shuffle=True, drop_last=True)
 
 #-------------#
