@@ -23,6 +23,9 @@ DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 train_path = os.path.join(DATA_DIR, "train.txt")
 toy_path = os.path.join(DATA_DIR, "toy.txt")
 
+with open(train_path, "r", encoding="utf-8") as f:
+    train_text = f.read()
+
 with open(toy_path, "r", encoding="utf-8") as f:
     toy_text = f.read()
 

@@ -12,8 +12,9 @@ def train_model(model, dataloader, epochs=100, lr=0.001):
     optimiser = optim.Adam(model.parameters(), lr=lr)
 
     model.train()
+    total_steps = epochs * len(dataloader)
+    loop = tqdm(total=total_steps)
     for epoch in range(epochs):
-        loop = tqdm(dataloader, leave=True, mininterval=0.1)
         total_loss = 0
 
         for x_batch, y_batch in dataloader:
@@ -49,9 +50,11 @@ def train_model(model, dataloader, epochs=100, lr=0.001):
             total_loss += loss.item()
 
             # update progress bar description
-            loop.set_description(f"Epoch [{epoch+1}/{epochs}]")
-            loop.set_postfix(loss=loss.item())
+            loop.update(1)
+            loop.set_postfix(epoch=epoch+1, loss=loss.item())
 
         if (epoch+1) % 20 == 0:
             # !Implement Accuracy
             print(f"Epoch {epoch+1:4d} | Loss {total_loss/len(dataloader):.4f} | Acc --")
+
+    loop.close()
