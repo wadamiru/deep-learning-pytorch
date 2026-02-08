@@ -1,8 +1,9 @@
 from lstm import LSTMWrapper
-from dataset import CharDataset
-from torch.utils.data import DataLoader
+from dataset import get_dataloaders
+from early_stopping import EarlyStopping
+import torch
+from torch import optim, nn
 from train import train_model
-import os
 
 #---------------#
 # CONFIGURATION #
@@ -17,27 +18,18 @@ EPOCHS = 100
 #-----------#
 # LOAD DATA #
 #-----------#
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(PROJECT_ROOT, "data")
-
-train_path = os.path.join(DATA_DIR, "train.txt")
-toy_path = os.path.join(DATA_DIR, "toy.txt")
-
-with open(train_path, "r", encoding="utf-8") as f:
-    train_text = f.read()
-
-with open(toy_path, "r", encoding="utf-8") as f:
-    toy_text = f.read()
-
-dataset = CharDataset(toy_text, SEQ_LEN)
-loader = DataLoader(dataset, BATCH_SIZE, shuffle=True, drop_last=True)
+toy_loader, train_loader, val_loader, test_loader, vocab_size, _, _ = get_dataloaders(SEQ_LEN, BATCH_SIZE)
 
 #-------------#
 # MODEL SETUP #
 #-------------#
-model = LSTMWrapper(dataset.vocab_size, HIDDEN_SIZE, NUM_LAYERS)
+model = LSTMWrapper(vocab_size, HIDDEN_SIZE, NUM_LAYERS)
 
 #-------------#
 # TRAIN MODEL #
 #-------------#
-train_model(model, loader, EPOCHS, LR)
+optimiser = optim.Adam(model.parameters(), LR)
+criterion = nn.CrossEntropyLoss()
+early_stopper = EarlyStopping(patience=5, min_delta=0.01)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+train_model(model, train_loader, val_loader, optimiser, criterion, early_stopper, device, EPOCHS)

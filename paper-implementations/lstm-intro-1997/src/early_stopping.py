@@ -9,7 +9,7 @@ class EarlyStopping:
         self.counter = 0
 
     def step(self, val_loss):
-        if val_loss < self.best_loss:
+        if val_loss < self.best_loss - self.min_delta:
             self.best_loss = val_loss
             self.counter = 0
             ## DO NOT STOP
